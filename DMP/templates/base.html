@@ -1,15 +1,22 @@
 <!DOCTYPE HTML>
 <HTML>
-<HEAD><TITLE>First Page</TITLE></HEAD>
-<BODY>
-<H1>
-{% if bool_item %}
-Random number is: {{num}}
-{% endif %}
-{% for some_item in some_list %}
-<P>{{some_item}}</P>
-{% endfor %}
-</H1>
-</BODY>
+	<HEAD>
+		<TITLE>
+			CrankItUp!!
+		</TITLE>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+	</HEAD>
+	<BODY>
+		<nav class="navbar navbar-dark bg-dark">
+			<a class="navbar-brand" href="/">CrankItUp!<a>
+		</nav>
+	
+		{% block content %}
+		{% endblock content %}
+		
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+	</BODY>
 </HTML>		
 

@@ -2,7 +2,7 @@
 <HTML>
 	<HEAD>
 		<TITLE>
-			CrankItUp!!
+			{% block title %}CrankItUp{% endblock title %}
 		</TITLE>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
 	</HEAD>
@@ -13,6 +13,13 @@
 	
 		{% block content %}
 		{% endblock content %}
+		<div class="container">
+			<h3>Crank It Up!!</h3>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/about/">About</a></li>
+				<li><a href="/contact/">Contact</a></li>
+			</ul>
 		
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>

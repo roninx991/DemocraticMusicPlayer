@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+<TITLE>{% block title %}{{block.super}} > Home {% endblock title %}</TITLE>
+
+{% block content %}
+<div class="container">
+	{% for some_item in some_list %}
+		<br>{{some_item}}
+	{% endfor %}
+<div>
+{% endblock content %}

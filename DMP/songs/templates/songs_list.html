@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+<title>{% block title %}{{block.super}} > Songs{% endblock title %}</title>
+{% block content %}
+<h1>Songs list</h1>
+<ul>
+{% for some_item in object_list %}
+	<li>{{some_item.Name}}</li>
+{% endfor %}
+</ul>
+{% endblock content %}

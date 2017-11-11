@@ -1,29 +1,39 @@
 <!DOCTYPE HTML>
-<HTML>
-	<HEAD>
-		<TITLE>
+<html>
+	<head>
+		<title>
 			{% block title %}CrankItUp{% endblock title %}
-		</TITLE>
+		</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
-	</HEAD>
-	<BODY>
+	</head>
+	<body>
 		<nav class="navbar navbar-dark bg-dark">
 			<a class="navbar-brand" href="/">CrankItUp!<a>
+			<div id="navbarNav">
+				<ul class="nav">
+					<li class="nav-item">
+						<a class="nav-link" href="/">Home</a>
+					<li>
+					<li class="nav-item">
+						<a class="nav-link" href="/songs/">Songs</a>
+					<li>
+					<li class="nav-item">
+						<a class="nav-link" href="/about/">About</a>
+					<li>
+					<li class="nav-item">
+						<a class="nav-link" href="/contact/">Contact</a>
+					<li>
+
+				</ul>
+			</div>
 		</nav>
-	
-		{% block content %}
-		{% endblock content %}
 		<div class="container">
-			<h3>Crank It Up!!</h3>
-			<ul>
-				<li><a href="/">Home</a></li>
-				<li><a href="/about/">About</a></li>
-				<li><a href="/contact/">Contact</a></li>
-			</ul>
-		
+			{% block content %}
+			{% endblock content %}
+		</div>
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
-	</BODY>
-</HTML>		
+	</body>
+</html>		
 

@@ -8,7 +8,7 @@ import string
 
 def random_string_generator(size=10, chars=string.ascii_lowercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
-
+DONT_USE = ["create"]
 
 def unique_slug_generator(instance, new_slug=None):
     """
@@ -19,9 +19,14 @@ def unique_slug_generator(instance, new_slug=None):
         slugg = new_slug
     else:
         slugg = slugify(instance.title)
-
+    if slugg in DONT_USE:
+        new_slug = "{slugg}-{randstr}".format(
+                    slugg,
+                    randstr=random_string_generator(size=4)
+                )
+        return unique_slug_generator(instance, new_slug)
     Klass = instance.__class__
-    qs_exists = Klass.objects.filter(Slug_Field=slugg).exists()
+    qs_exists = Klass.objects.filter(slug=slugg).exists()
     if qs_exists:
         new_slug = "{slugg}-{randstr}".format(
                     slugg,

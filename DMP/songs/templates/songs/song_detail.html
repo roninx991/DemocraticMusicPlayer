@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 <title>{% block title %}{{block.super}} > Songs{% endblock title %}</title>
 {% block content %}
-<h1>Songs list</h1>
-<ul>
-{% for some_item in object_list %}
-	<li>{{some_item.Name}}</li>
-{% endfor %}
-</ul>
+<h1>Song Details</h1>
+<table>
+	<tr>
+		<td>{{object.Name}}</td>
+		<td>{{object.Singer}}</td>
+		<td>{{object.Genre}}</td>
+	</tr>
+</table>
 {% endblock content %}

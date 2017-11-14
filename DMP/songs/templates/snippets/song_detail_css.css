@@ -1,0 +1,40 @@
+img{
+	height:200px;
+	width :200px;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #ecf0f1;
+    font-size: 14px;
+}
+.active {
+    background-color: #ecf0f1;
+}
+.panel {
+    padding: 20px;
+    // background-color: red;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.table>tr>td {
+    border-bottom: 1px solid #95a5a6;
+}
+
+
+h3 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+tr{
+	font-weight:bold;
+	font-size:150%;
+	border-bottom:solid 1px black;
+}
+td{
+	border-bottom:solid 5px black;
+}
+

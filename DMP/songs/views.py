@@ -11,29 +11,33 @@ from songs.utils import unique_slug_generator
 
 def song_createview(request):
 	template_name='songs/form.html'
+	form = SongCreateForm(request.POST or None)
+	errors = None
 	#queryset = Song.objects.all()
-	context = {}
 #	if request.method == "GET":
 #		print(request.GET)
 	#print(request.POST)
-	if request.method == "POST":
+#	if request.method == "POST":
 #		print(request.POST)
 #		name = request.POST.get("Name")
 #		singer = request.POST.get("Singer")
 #		genre = request.POST.get("Genre")
-		form = SongCreateForm(request.POST)
-		if form.is_valid():
-			obj = Song.objects.create(
-				Name = form.cleaned_data.get('Name'),
-				Singer = form.cleaned_data.get('Singer'),
-				Genre = form.cleaned_data.get('Genre')
-			)
-			obj.slug = unique_slug_generator(obj)
-			obj.save()
-			return HttpResponseRedirect("/songs/")
+#		form = SongCreateForm(request.POST)
+	if form.is_valid():
+		obj = Song.objects.create(
+			Name = form.cleaned_data.get('Name'),
+			Singer = form.cleaned_data.get('Singer'),
+			Genre = form.cleaned_data.get('Genre')
+		)
+		obj.slug = unique_slug_generator(obj)
+		obj.save()
+		return HttpResponseRedirect("/songs/")
+	if form.errors:
+		print(form.errors)
+		errors = form.errors
 	template_name='songs/form.html'
 	#queryset = Song.objects.all()
-	context = {}
+	context = {"form":form}
 	return render(request, template_name, context)
 
 

@@ -1,0 +1,51 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #ecf0f1;
+    font-size: 14px;
+}
+
+a {
+    color: #3498db;
+    
+    &:hover {
+        text-decoration: none;
+        color: #2980b9;
+    }
+}
+
+
+.active {
+    background-color: #ecf0f1;
+}
+.panel {
+    padding: 20px;
+    // background-color: red;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+// .table-heading {
+//     background-color: pink;
+// }
+.table>thead>tr>th {
+    border-bottom: 1px solid #95a5a6;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    border-top: 1px solid #ecf0f1;
+}
+
+h3 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+#MusicPlayer{
+	position:fixed;
+	top:90%;
+	height:100px;
+	width:100%;
+	background-color:black;
+}

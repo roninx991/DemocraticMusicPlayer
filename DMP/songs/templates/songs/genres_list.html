@@ -1,11 +1,32 @@
 {% extends "base.html" %}
-<title>{% block title %}{{block.super}} > Genres {% endblock %}</title>
-
+<title>{% block title %}{{block.super}} > Songs{% endblock title %}</title>
 {% block content %}
-<h1>Genres list</h1>
-<ul>
-{% for item in object_list %}
-	<li><a href="/genre/{{item.Genre}}/">{{item.Genre}}</a></li>
-{% endfor %}
-</ul>
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900' rel='stylesheet' type='text/css'>
+<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+<style>{% include "snippets/songs_list_css.css" %}</style>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <h3>Genres</h3>
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr class="active">
+                            <th>#</th>
+                            <th>Genres</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    	{% for some_item in object_list %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td><a href="/genre/{{some_item.Genre}}">{{some_item.Genre}}</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
+
+

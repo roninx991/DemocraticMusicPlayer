@@ -1,12 +1,34 @@
 {% extends "base.html" %}
 <title>{% block title %}{{block.super}} > Songs{% endblock title %}</title>
 {% block content %}
-<h1>Song Details</h1>
-<table>
-	<tr>
-		<td>{{object.Name}}</td>
-		<td>{{object.Singer}}</td>
-		<td>{{object.Genre}}</td>
-	</tr>
-</table>
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900' rel='stylesheet' type='text/css'>
+<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+<style>{% include "snippets/song_detail_css.css" %}</style>
+<h1>{{object.Name}}</h1>
+{% load static %}
+<div class="row">
+	<div class="col-md-4 col-lg-4 col-xs-12">
+		<img src="{% static 'images/' %}{{object.slug}}.jpg" alt="{{object.slug}}-image"/>
+	</div>
+	<div class="col-md-8 col-lg-8 col-xs-12">
+            <div class="panel panel-default">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr class="active">
+                            <td>Singer: {{object.Singer}}</td>
+                        </tr>
+                        <tr class="active">
+                            <td>Genre: {{object.Genre}}</td>
+                        </tr>
+                        <tr class="active">
+                            <td>Votes: {{object.Votes}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+	</div>
+</div>
 {% endblock content %}
+

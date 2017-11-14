@@ -3,9 +3,11 @@
 {% block content %}
 <h1>Add Song</h1>
 <form method="POST">{% csrf_token %}
-	<input type="text" name='Name' placeholder="Song">
+<!--	<input type="text" name='Name' placeholder="Song">
 	<input type="text" name='Singer' placeholder="Singer">
-	<input type="text" name='Genre' placeholder="Genre">
+	<input type="text" name='Genre' placeholder="Genre"> -->
+	
+	{{form.as_p}}
 	<button type="submit">Save</button>
 </form>	
 

@@ -3,9 +3,6 @@
 {% block content %}
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900' rel='stylesheet' type='text/css'>
 <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
-<script type="text/javascript">
-	var playlist = [];
-</script>
 <style>{% include "snippets/songs_list_css.css" %}</style>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -27,12 +24,6 @@
                             <td>{{some_item.Votes}}<i class="fa fa-thumbs-up" aria-hidden="true" style="float:right;cursor:pointer;"></i></td>
                         </tr>
                         {% endfor %}
-                        {% for obj in object_list %}
-							<script type="text/javascript">
-								playlist.push("{{obj.slug}}");
-								
-							</script>
-						{% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -41,48 +32,92 @@
 
 {% endblock content %}
 {% block player %}
-	<div id="MusicPlayer" class="row">
-		<div class="col-md-1 col-lg-1 col-xs-1">
+<!DOCTYPE HTML>
+	<div id="MusicPlayer" class="row container-fluid">
+		<div class="col-md-1 col-lg-1">
 			{% load static %}
-			<img src="{% static 'images/' %}">
+			<img src="{% static 'images/' %}{{object_list.first.slug}}.jpg">
 		</div>
+		<div class="col-md-1 col-lg-1 col-xs-1">
+			<div id="track"><!--{{object_list.first}}<br><small>{{object_list.first.Singer}}</small>--></div>
+		</div>
+		<div class="col-md-3 col-lg-3 col-xs-3">
+		<div id="toolbar">
+			<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" id="music-control-bar">
+				<div class="btn-group mr-2" role="group">
+					<button type="button" class="btn btn-secondary" onclick="previous()" id="prev"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
+					<button type="button" class="btn btn-secondary" onclick="pauseplay()" id="pandp"><i class="fa fa-pause" aria-hidden="true"></i></button>
+					<button type="button" class="btn btn-secondary" onclick="next()" id="nxt"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+				</div>		
+			</div>
+		</div>
+		</div>
+		{% load static %}
+		<audio id="MPlayer" autoplay>
+			<source id="MusicSrc" src="{% static 'songs/' %}{{object_list.first.slug}}.mp3">
+		</audio>
 	</div>
+	<script type="text/javascript">
+		var playlist = [];
+		var singers = [];
+		var names = [];
+		var pause_play=0;
+		var counter=0;
+		var music = document.getElementById("MPlayer");
+		var msource = document.getElementById("MusicSrc");
+	</script>
+    {% for obj in object_list %}
+		<script type="text/javascript">
+			playlist.push("{{obj.slug}}");
+			singers.push("{{obj.Singer}}");
+			names.push("{{obj.Name}}")	
+		</script>
+	{% endfor %}
+	<script type="text/javascript">
+		document.getElementById("track").innerHTML=names[0]+"<br><small>"+singers[0]+"</small>";
+		function previous()
+		{
+			counter=counter-1;
+			if(counter<0)
+			{
+				counter=playlist.length-1;
+			}	
+			msource.src="{% static 'songs/' %}"+playlist[counter]+".mp3";
+			music.load();
+		}
+		function next()
+		{
+			counter=counter+1;
+			if(counter>playlist.length-1)
+			{
+				counter=0;
+			}
+			msource.src="{% static 'songs/' %}"+playlist[counter]+".mp3";
+			music.load();
+		}
+		function pauseplay()
+		{
+			if(pause_play==0)
+			{
+				document.getElementById("pandp").innerHTML="<i class='fa fa-play' aria-hidden='true'></i>";
+				pause_play=1;
+				music.pause();
+			}
+			else
+			{
+				document.getElementById("pandp").innerHTML="<i class='fa fa-pause' aria-hidden='true'></i>";
+				pause_play=0;
+				music.play();
+			}
+		}
+		if(music.ended)
+		{
+			counter = counter+1;
+			msource.src="{% static 'songs/' %}"+playlist[counter]+".mp3";
+			music.load();
+		}
+	</script>
+	
 {% endblock player %}
 
-<!--
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <h3>Anime</h3>
-                <table class="table table-hover table-bordered">
-                    <thead>
-                        <tr class="active">
-                            <th>#</th>
-                            <th>Songs</th>
-                            <th>Votes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="/songs/{{so">Naruto Shippuden</a></td>
-                            <td>2 hours ago</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><a href="#">One Punch Man</a></td>
-                            <td>5 hours ago</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td><a href="#">Owari no Seraph</a></td>
-                            <td>7 hours ago</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
--->
+

@@ -2,6 +2,7 @@ body {
     font-family: 'Roboto', sans-serif;
     background-color: #ecf0f1;
     font-size: 14px;
+    overflow:True;
 }
 
 a {
@@ -26,9 +27,6 @@ a {
     margin-top: 20px;
 }
 
-// .table-heading {
-//     background-color: pink;
-// }
 .table>thead>tr>th {
     border-bottom: 1px solid #95a5a6;
 }
@@ -46,6 +44,24 @@ h3 {
 	position:fixed;
 	top:90%;
 	height:100px;
-	width:100%;
+	width:110%;
 	background-color:black;
 }
+#MusicPlayer img{
+	height:90%;
+	width:80%;
+	padding:10px;
+}
+#MusicPlayer #track{
+	padding:15% 0 25% 0;
+	position: relative;
+	left:-35%;
+	color: white;
+	font-size:150%;
+}
+#toolbar{
+	position: relative;
+	top: 25px;
+	left: -75px;
+}
+

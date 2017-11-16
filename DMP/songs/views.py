@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.views.generic import TemplateView,ListView,DetailView
-from .forms import SongCreateForm
+from .forms import SongCreateForm,SongDetailCreateForm
 from  .models import Song
 import random
 from songs.utils import unique_slug_generator
@@ -11,7 +11,7 @@ from songs.utils import unique_slug_generator
 
 def song_createview(request):
 	template_name='songs/form.html'
-	form = SongCreateForm(request.POST or None)
+	form = SongDetailCreateForm(request.POST or None)
 	errors = None
 	#queryset = Song.objects.all()
 #	if request.method == "GET":
@@ -24,13 +24,14 @@ def song_createview(request):
 #		genre = request.POST.get("Genre")
 #		form = SongCreateForm(request.POST)
 	if form.is_valid():
-		obj = Song.objects.create(
-			Name = form.cleaned_data.get('Name'),
-			Singer = form.cleaned_data.get('Singer'),
-			Genre = form.cleaned_data.get('Genre')
-		)
-		obj.slug = unique_slug_generator(obj)
-		obj.save()
+		form.save()
+#		obj = Song.objects.create(
+#			Name = form.cleaned_data.get('Name'),
+#			Singer = form.cleaned_data.get('Singer'),
+#			Genre = form.cleaned_data.get('Genre')
+#		)
+#		obj.slug = unique_slug_generator(obj)
+#		obj.save()
 		return HttpResponseRedirect("/songs/")
 	if form.errors:
 		print(form.errors)

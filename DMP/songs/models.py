@@ -28,6 +28,6 @@ def rl_pre_save_receiver(sender,instance,*args,**kwargs):
 #	print('saved')
 #	print(instance.Name)
 	
-#pre_save.connect(rl_pre_save_receiver, sender=Song)
+pre_save.connect(rl_pre_save_receiver, sender=Song)
 
 #post_save.connect(rl_post_save_receiver, sender=Song)

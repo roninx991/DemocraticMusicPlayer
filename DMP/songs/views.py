@@ -1,14 +1,17 @@
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
-from django.views.generic import TemplateView,ListView,DetailView
+from django.views.generic import TemplateView,ListView,DetailView,CreateView
 from .forms import SongCreateForm,SongDetailCreateForm
 from  .models import Song
 import random
 from songs.utils import unique_slug_generator
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 # Function based view
 
+@login_required()
 def song_createview(request):
 	template_name='songs/form.html'
 	form = SongDetailCreateForm(request.POST or None)
@@ -24,21 +27,27 @@ def song_createview(request):
 #		genre = request.POST.get("Genre")
 #		form = SongCreateForm(request.POST)
 	if form.is_valid():
-		form.save()
-#		obj = Song.objects.create(
-#			Name = form.cleaned_data.get('Name'),
-#			Singer = form.cleaned_data.get('Singer'),
-#			Genre = form.cleaned_data.get('Genre')
-#		)
-#		obj.slug = unique_slug_generator(obj)
-#		obj.save()
-		return HttpResponseRedirect("/songs/")
+		if request.user.is_authenticated():
+			instance = form.save(commit=False)
+			
+			instance.owner = request.user
+			instance.save()
+	#		form.save()
+	#		obj = Song.objects.create(
+	#			Name = form.cleaned_data.get('Name'),
+	#			Singer = form.cleaned_data.get('Singer'),
+	#			Genre = form.cleaned_data.get('Genre')
+	#		)
+	#		obj.slug = unique_slug_generator(obj)
+	#		obj.save()
+			return HttpResponseRedirect("/songs/")
+		else:
+			return HttpResponseRedirect("/login/")
 	if form.errors:
-		print(form.errors)
 		errors = form.errors
 	template_name='songs/form.html'
 	#queryset = Song.objects.all()
-	context = {"form":form}
+	context = {"form":form,"errors":errors}
 	return render(request, template_name, context)
 
 
@@ -57,7 +66,7 @@ class SongListView(ListView):
 		if slug:
 			queryset = Song.objects.filter(Genre__icontains=slug).order_by('Votes','Name')
 		else:
-			queryset = Song.objects.all().order_by('Votes','Name')
+			queryset = Song.objects.all().order_by('-Votes','Name')
 		return queryset
 
 class GenreListView(ListView):
@@ -84,3 +93,13 @@ class SongDetailView(DetailView):
 #		song_id = self.kwargs.get('song_id')
 #		obj = get_object_or_404(Song,id=song_id)
 #		return obj
+
+class SongCreateView(LoginRequiredMixin,CreateView):
+	form_class = SongDetailCreateForm
+	template_name = "songs/form.html"
+	success_url = "/songs/"
+	
+	def form_valid(self,form):
+		instance = form.save(commit=False)
+		instance.owner = self.request.user
+		return super(SongCreateView,self).form_valid(form)

@@ -2,6 +2,9 @@
 <title>{% block title %}{{block.super}} > Add Song{% endblock title %}</title>
 {% block content %}
 <h1>Add Song</h1>
+{% if form.errors %}
+{{form.errors}}
+{% endif %}
 <form method="POST">{% csrf_token %}
 <!--	<input type="text" name='Name' placeholder="Song">
 	<input type="text" name='Singer' placeholder="Singer">

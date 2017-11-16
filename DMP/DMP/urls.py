@@ -16,13 +16,14 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.views.generic import TemplateView
-
-from songs.views import SongListView,GenreListView,SongDetailView,song_createview#,PopListView,ContemporaryListView
+from django.contrib.auth.views import LoginView
+from songs.views import SongListView,GenreListView,SongDetailView,SongCreateView,song_createview#,PopListView,ContemporaryListView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',TemplateView.as_view(template_name="home.html")),
+    url(r'^login/$',LoginView.as_view(),name='login'),
     url(r'^songs/$',SongListView.as_view()),
-    url(r'^songs/create/$',song_createview),
+    url(r'^songs/create/$',SongCreateView.as_view()),
     #url(r'^songs/(?P<slug>\w+)/$',SongListView.as_view()),
     url(r'^songs/(?P<slug>[\w-]+)/$',SongDetailView.as_view()),
     url(r'^genre/$',GenreListView.as_view()),

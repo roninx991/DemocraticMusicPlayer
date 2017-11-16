@@ -409,6 +409,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'DMP.urls'
+LOGIN_URL = '/login/'
 
 TEMPLATES = [
     {

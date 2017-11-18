@@ -2,16 +2,16 @@ from django.conf import settings
 from django.db import models
 from django.db.models.signals import pre_save,post_save
 from songs.utils import unique_slug_generator
-from .validators import validate_Genre
+# from .validators import validate_Genre
 # Create your models here.
 
-User = settings.AUTH_USER_MODEL
+# User = settings.AUTH_USER_MODEL
 
 class Song(models.Model):
-	owner		= models.ForeignKey(User)
+	# owner		= models.ForeignKey(User)
 	Name 		= models.CharField(max_length=200,unique=False)
 	Singer		= models.CharField(max_length=120,null=True,blank=True,unique=False)
-	Genre 		= models.CharField(max_length=120,null=True,blank=True,unique=False,validators=[validate_Genre])
+	Genre 		= models.CharField(max_length=120,null=True,blank=True,unique=False)#,validators=[validate_Genre])
 	slug		= models.SlugField(null=True,blank=True)
 	Votes		= models.BigIntegerField(default=0,unique=False)
 	

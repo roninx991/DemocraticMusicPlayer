@@ -58,13 +58,26 @@ def song_createview(request):
 #		"object_list" : queryset
 #	}
 #	return render(request, template_name, context)
-	
+@login_required
+def song_votes(request):
+	song_id = None
+	if request.method == 'GET':
+		song_id = request.GET['song_id']
+	votes = 0
+	if song_id:
+		song = Song.objects.filter(id=int(song_id))
+		if song:
+			votes = song.Votes + 1
+			song.Votes = votes
+			song.save()
+	return HttpResponse(votes)			
+
 class SongListView(ListView):
 	template_name='songs/songs_list.html'
 	def get_queryset(self):
 		slug=self.kwargs.get('slug')
 		if slug:
-			queryset = Song.objects.filter(Genre__icontains=slug).order_by('Votes','Name')
+			queryset = Song.objects.filter(Genre__icontains=slug).order_by('-Votes','Name')
 		else:
 			queryset = Song.objects.all().order_by('-Votes','Name')
 		return queryset
@@ -94,12 +107,12 @@ class SongDetailView(DetailView):
 #		obj = get_object_or_404(Song,id=song_id)
 #		return obj
 
-class SongCreateView(LoginRequiredMixin,CreateView):
-	form_class = SongDetailCreateForm
-	template_name = "songs/form.html"
-	success_url = "/songs/"
+# class SongCreateView(LoginRequiredMixin,CreateView):
+# 	form_class = SongDetailCreateForm
+# 	template_name = "songs/form.html"
+# 	success_url = "/songs/"
 	
-	def form_valid(self,form):
-		instance = form.save(commit=False)
-		instance.owner = self.request.user
-		return super(SongCreateView,self).form_valid(form)
+# 	def form_valid(self,form):
+# 		instance = form.save(commit=False)
+# 		instance.owner = self.request.user
+# 		return super(SongCreateView,self).form_valid(form)

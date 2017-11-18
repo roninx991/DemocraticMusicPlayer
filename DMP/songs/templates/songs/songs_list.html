@@ -14,6 +14,7 @@
                             <th>#</th>
                             <th>Songs</th>
                             <th>Votes</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -21,7 +22,14 @@
                         <tr>
                             <td>{{forloop.counter}}</td>
                             <td><a href="/songs/{{some_item.slug}}">{{some_item.Name}}</a></td>
-                            <td>{{some_item.Votes}}<i class="fa fa-thumbs-up" aria-hidden="true" style="float:right;cursor:pointer;"></i></td>
+                            <td><div id="votes-count{{some_item.id}}">{{some_item.Votes}}</div></td>
+                            <td>
+                            {% if user.is_authenticated %}
+                            	<button type="button" class="btn btn-primary votes" data-songid="{{some_item.id}}">
+                            		<i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                            	</button>
+                            {% endif %}
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -29,10 +37,30 @@
             </div>
         </div>
     </div>
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.js"
+				integrity="sha256-tA8y0XqiwnpwmOIl3SGAcFl2RvxHjA8qp0+1uCGmRmg=" 
+				crossorigin="anonymous">
+		</script>
+		<script
+			  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+			  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+			  crossorigin="anonymous">
+		</script>		
+		<script>
+		$(document).ready(function(){
+		    $(".votes").click(function(){
+		    	var songid;
+		    	songid = $(this).attr("data-songid");
+		        $.post("/songs/vote",{"song_id":songid},function(data){
+		            $(".votes-count").html(data);
+		            $(this).hide();
+		        });
+		    });
+		});
+		</script>
 
 {% endblock content %}
 {% block player %}
-<!DOCTYPE HTML>
 	<div id="MusicPlayer" class="row container-fluid">
 		<div class="col-md-1 col-lg-1">
 			{% load static %}
@@ -93,7 +121,4 @@
 	<script type="text/javascript">
 	{% include "snippets/songs_list_js.js" %} 
 	</script>
-	
 {% endblock player %}
-
-

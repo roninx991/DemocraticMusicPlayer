@@ -8,26 +8,26 @@
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="/">CrankItUp!<a>
+			<a class="navbar-brand" href="/">CrankItUp!</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     			<span class="navbar-toggler-icon"></span>
   			</button>
   			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item">
-						<a class="nav-link" href="/">Home</a>
+						<a class="nav-link" href="{% url 'home' %}">Home</a>
 					<li>
 					<li class="nav-item">
-						<a class="nav-link" href="/songs/">Songs</a>
+						<a class="nav-link" href="{% url 'songs' %}">Songs</a>
 					<li>
 					<li class="nav-item">
-						<a class="nav-link" href="/genre/">Genres</a>
+						<a class="nav-link" href="{% url 'genre' %}">Genres</a>
 					<li>
 					<li class="nav-item">
-						<a class="nav-link" href="/about/">About</a>
+						<a class="nav-link" href="{% url 'about' %}">About</a>
 					<li>
 					<li class="nav-item">
-						<a class="nav-link" href="/contact/">Contact</a>
+						<a class="nav-link" href="{% url 'contact' %}">Contact</a>
 					<li>
 
 				</ul>
@@ -42,6 +42,7 @@
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
 	</body>
 </html>		
 

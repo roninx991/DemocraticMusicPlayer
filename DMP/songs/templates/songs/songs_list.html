@@ -23,13 +23,6 @@
                             <td>{{forloop.counter}}</td>
                             <td><a href="/songs/{{some_item.slug}}">{{some_item.Name}}</a></td>
                             <td><div id="votes-count{{some_item.id}}">{{some_item.Votes}}</div></td>
-                            <td>
-                            {% if user.is_authenticated %}
-                            	<button type="button" class="btn btn-primary votes" data-songid="{{some_item.id}}">
-                            		<i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                            	</button>
-                            {% endif %}
-                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

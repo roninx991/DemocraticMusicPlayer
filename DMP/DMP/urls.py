@@ -21,6 +21,7 @@ from songs.views import SongListView,GenreListView,SongDetailView,song_votes#Son
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',TemplateView.as_view(template_name="home.html"),name="home"),
+    url(r'^register/$',LoginView.as_view(),name='register'),
     url(r'^login/$',LoginView.as_view(),name='login'),
     url(r'^songs/$',SongListView.as_view(),name="songs"),
     url(r'^songs/vote/$', song_votes, name='vote'),

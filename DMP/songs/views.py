@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.views.generic import TemplateView,ListView,DetailView,CreateView
-from .forms import SongCreateForm,SongDetailCreateForm
+from .forms import SongCreateForm,SongDetailCreateForm,RegisterForm
 from  .models import Song
 import random
 from songs.utils import unique_slug_generator
@@ -72,7 +72,7 @@ def song_votes(request):
 			song.save()
 	return HttpResponse(votes)			
 
-class SongListView(ListView):
+class SongListView(LoginRequiredMixin, ListView):
 	template_name='songs/songs_list.html'
 	def get_queryset(self):
 		slug=self.kwargs.get('slug')
@@ -82,7 +82,7 @@ class SongListView(ListView):
 			queryset = Song.objects.all().order_by('-Votes','Name')
 		return queryset
 
-class GenreListView(ListView):
+class GenreListView(LoginRequiredMixin, ListView):
 	template_name='songs/genres_list.html'
 	def get_queryset(self):
 		slug=self.kwargs.get('slug')
@@ -100,8 +100,13 @@ class GenreListView(ListView):
 			print(qs)
 		return queryset
 	
-class SongDetailView(DetailView):
+class SongDetailView(LoginRequiredMixin, DetailView):
 	queryset = Song.objects.all()	
+
+class RegisterView(CreateView):
+	form_class = RegisterForm
+	template_name = "registration/register.html"
+	success_url = "/songs/"
 #	def get_object(self,*args,**kwargs):
 #		song_id = self.kwargs.get('song_id')
 #		obj = get_object_or_404(Song,id=song_id)

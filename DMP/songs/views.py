@@ -1,15 +1,38 @@
-from django.shortcuts import render,get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
-from django.views import View
-from django.views.generic import TemplateView,ListView,DetailView,CreateView
-from .forms import SongCreateForm,SongDetailCreateForm,RegisterForm
-from  .models import Song
-import random
-from songs.utils import unique_slug_generator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render,redirect,get_object_or_404
+from django.views import View
+from django.views.generic import TemplateView,ListView,DetailView,CreateView
+from .forms import RegisterForm
+from  .models import Song
+from songs.utils import unique_slug_generator
 # Create your views here.
 # Function based view
+
+def signup(request):
+	queryset = Song.objects.all().order_by('Name')
+	if request.method == 'POST':
+		form = UserCreationForm(request.POST)
+		if form.is_valid():
+			form.save()
+			username = form.cleaned_data.get('username')
+			raw_password = form.cleaned_data.get('password1')
+			user = authenticate(username=username, password=raw_password)
+			for s in queryset:
+				vote = form.cleaned_data.get(str(s.slug))
+				if vote:
+					obj = get_object_or_404(Song,id=s.id)
+					obj.Votes = obj.Votes + 1
+					obj.save()
+
+		login(request, user)
+		return redirect('/songs/')
+	else:
+		form = UserCreationForm()
+	return render(request, 'home.html', {'form': form,'songs':queryset})
 
 @login_required()
 def song_createview(request):

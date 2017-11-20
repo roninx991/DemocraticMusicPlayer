@@ -3,8 +3,30 @@
 
 {% block content %}
 <div class="container">
-	{% for some_item in some_list %}
-		<br>{{some_item}}
-	{% endfor %}
-<div>
+  <h2>Sign up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    	<p>
+	        {{ field.label_tag }}<br>
+	        {{ field }}
+	        {% for error in field.errors %}
+	          <p style="color: red">{{ error }}</p>
+	        {% endfor %}
+      </p>
+    {% endfor %}
+    <button class="btn btn-primary" type="submit">Sign up</button><span> or <a href="{% url 'login' %}">Sign in</a></span>
+    <p>
+    	<h4>Please vote for your favourite songs!</h4>
+    	<div class="row">
+    	<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+    		{% for song in queryset %}
+    			<label class="form-check-label">
+			      <input type="checkbox" class="form-check-input" name="{{song.slug}}">
+			      	{{song}}
+    		{% endfor %}
+    	</div>
+    </p>
+  </form>
+</div>
 {% endblock content %}

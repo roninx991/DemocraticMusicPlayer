@@ -1,1 +1,1 @@
-web: python DMP/manage.py runserver
+web: gunicorn DMP.wsgi:application --log-file -

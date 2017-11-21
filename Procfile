@@ -1,1 +1,1 @@
-web: gunicorn DMP.wsgi:application --log-file -
+web: gunicorn DMP.wsgi --log-file -

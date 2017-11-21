@@ -1,1 +1,1 @@
-web: gunicorn DMP.wsgi --log-file -
+web: gunicorn --pythonpath DMP wsgi

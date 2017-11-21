@@ -6,9 +6,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,redirect,get_object_or_404
 from django.views import View
 from django.views.generic import TemplateView,ListView,DetailView,CreateView
-# from .forms import RegisterForm
 from  .models import Song
 from songs.utils import unique_slug_generator
+
 # Create your views here.
 # Function based view
 
@@ -31,7 +31,7 @@ def signup(request):
 					obj.save()
 
 		
-		return redirect('/songs/')
+			return redirect('/songs/')
 	else:
 		form = UserCreationForm()
 	return render(request, 'home.html', {'form': form,'songs':queryset})

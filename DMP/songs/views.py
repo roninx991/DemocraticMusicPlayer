@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,redirect,get_object_or_404
 from django.views import View
 from django.views.generic import TemplateView,ListView,DetailView,CreateView
-from .forms import RegisterForm
+# from .forms import RegisterForm
 from  .models import Song
 from songs.utils import unique_slug_generator
 # Create your views here.
@@ -15,20 +15,22 @@ from songs.utils import unique_slug_generator
 def signup(request):
 	queryset = Song.objects.all().order_by('Name')
 	if request.method == 'POST':
+		print(request.POST)
 		form = UserCreationForm(request.POST)
 		if form.is_valid():
 			form.save()
 			username = form.cleaned_data.get('username')
 			raw_password = form.cleaned_data.get('password1')
 			user = authenticate(username=username, password=raw_password)
+			login(request, user)
 			for s in queryset:
-				vote = form.cleaned_data.get(str(s.slug))
+				vote = request.POST.get(s.slug)
 				if vote:
 					obj = get_object_or_404(Song,id=s.id)
 					obj.Votes = obj.Votes + 1
 					obj.save()
 
-		login(request, user)
+		
 		return redirect('/songs/')
 	else:
 		form = UserCreationForm()
@@ -126,10 +128,10 @@ class GenreListView(LoginRequiredMixin, ListView):
 class SongDetailView(LoginRequiredMixin, DetailView):
 	queryset = Song.objects.all()	
 
-class RegisterView(CreateView):
-	form_class = RegisterForm
-	template_name = "registration/register.html"
-	success_url = "/songs/"
+# class RegisterView(CreateView):
+# 	form_class = RegisterForm
+# 	template_name = "registration/register.html"
+# 	success_url = "/songs/"
 #	def get_object(self,*args,**kwargs):
 #		song_id = self.kwargs.get('song_id')
 #		obj = get_object_or_404(Song,id=song_id)

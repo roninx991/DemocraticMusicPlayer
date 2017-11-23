@@ -17,16 +17,12 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView
-from songs.views import SongListView,GenreListView,SongDetailView,song_votes,signup#SongCreateView,song_createview,PopListView,ContemporaryListView
+from songs.views import SongListView,GenreListView,SongDetailView,signup,login_user
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',signup),
-    #url(r'^register/$',LoginView.as_view(),name='register'),
-    url(r'^login/$',LoginView.as_view(),name='login'),
+    url(r'^login/$',login_user,name="login"),
     url(r'^songs/$',SongListView.as_view(),name="songs"),
-    url(r'^songs/vote/$', song_votes, name='vote'),
-    # url(r'^songs/create/$',SongCreateView.as_view(),name="add-song"),
-    #url(r'^songs/(?P<slug>\w+)/$',SongListView.as_view()),
     url(r'^songs/(?P<slug>[\w-]+)/$',SongDetailView.as_view()),
     url(r'^genre/$',GenreListView.as_view(),name="genre"),
     url(r'^genre/(?P<slug>\w+)/$',SongListView.as_view()),
